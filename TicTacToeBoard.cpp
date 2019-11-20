@@ -35,13 +35,37 @@ Piece TicTacToeBoard::toggleTurn() {
  * is over, no more pieces can be placed so attempting to place a piece
  * should neither change the board nor change whose turn it is.
  **/
-Piece TicTacToeBoard::placePiece(int row, int column) { return Invalid; }
+Piece TicTacToeBoard::placePiece(int row, int column) {
+  int emptySpot = 0;
+  for (int i = 0; i < BOARDSIZE; i++) {
+    for (int j = 0; j < BOARDSIZE; j++) {
+      if (board[i][j] == Blank) {
+        emptySpot = 1;
+      }
+    }
+  }
+  if (emptySpot == 0) {
+    return Invalid;
+  }
+  if (row > 2 || row < 0) {
+    toggleTurn();
+    return Invalid;
+  } else if (board[row][column] == Blank) {
+    board[row][column] = turn;
+    return board[row][column];
+  } else {
+    // Silences Warnings
+    return Invalid;
+  }
+}
 
 /**
  * Returns what piece is at the provided coordinates, or Blank if there
  * are no pieces there, or Invalid if the coordinates are out of bounds
  **/
-Piece TicTacToeBoard::getPiece(int row, int column) { return Invalid; }
+Piece TicTacToeBoard::getPiece(int row, int column) {
+  return board[row][column];
+}
 
 /**
  * Returns which Piece has won, if there is a winner, Invalid if the game
