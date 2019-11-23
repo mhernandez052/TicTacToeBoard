@@ -150,6 +150,7 @@ TEST(TicTacToeBoardTest, getWinnerColumn) {
   board.placePiece(2, 0);
   ASSERT_EQ(board.getWinner(), X);
 }
+
 TEST(TicTacToeBoardTest, getWinnerDiagonal) {
   TicTacToeBoard board;
   board.placePiece(0, 0);
@@ -159,11 +160,13 @@ TEST(TicTacToeBoardTest, getWinnerDiagonal) {
   board.placePiece(2, 2);
   ASSERT_EQ(board.getWinner(), X);
 }
+
 TEST(TicTacToeBoardTest, getWinnerNone) {
   TicTacToeBoard board;
   board.placePiece(2, 2);
   ASSERT_EQ(board.getWinner(), Invalid);
 }
+
 TEST(TicTacToeBoardTest, getWinnerCatsGame) {
   TicTacToeBoard board;
   board.placePiece(1, 1);
