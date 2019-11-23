@@ -161,6 +161,7 @@ TEST(TicTacToeBoardTest, getWinnerDiagonal) {
 }
 TEST(TicTacToeBoardTest, getWinnerNone) {
   TicTacToeBoard board;
+  board.placePiece(2, 2);
   ASSERT_EQ(board.getWinner(), Invalid);
 }
 TEST(TicTacToeBoardTest, getWinnerCatsGame) {
