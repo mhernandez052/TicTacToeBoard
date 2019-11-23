@@ -23,7 +23,6 @@ Piece TicTacToeBoard::toggleTurn() {
     turn = X;
   }
   return turn;
-  // return Invalid;
 }
 
 /**
@@ -36,7 +35,11 @@ Piece TicTacToeBoard::toggleTurn() {
  * should neither change the board nor change whose turn it is.
  **/
 Piece TicTacToeBoard::placePiece(int row, int column) {
+  int validCoords = 1;
   int emptySpot = 0;
+  if (row > 2 || row < 0 || column > 2 || column < 0) {
+    validCoords = 0;
+  }
   for (int i = 0; i < BOARDSIZE; i++) {
     for (int j = 0; j < BOARDSIZE; j++) {
       if (board[i][j] == Blank) {
@@ -44,19 +47,16 @@ Piece TicTacToeBoard::placePiece(int row, int column) {
       }
     }
   }
-  if (emptySpot == 0) {
-    return Invalid;
-  }
-  if (row > 2 || row < 0) {
-    toggleTurn();
-    return Invalid;
-  } else if (board[row][column] == Blank) {
-    board[row][column] = turn;
+  if (validCoords && (!emptySpot)) {
     return board[row][column];
-  } else {
-    // Silences Warnings
+  } else if (!validCoords) {
     return Invalid;
   }
+  if (board[row][column] == Blank) {
+    board[row][column] = turn;
+    toggleTurn();
+  }
+  return board[row][column];
 }
 
 /**
@@ -64,6 +64,9 @@ Piece TicTacToeBoard::placePiece(int row, int column) {
  * are no pieces there, or Invalid if the coordinates are out of bounds
  **/
 Piece TicTacToeBoard::getPiece(int row, int column) {
+  if (row > 2 || row < 0 || column > 2 || column < 0) {
+    return Invalid;
+  }
   return board[row][column];
 }
 
@@ -71,4 +74,32 @@ Piece TicTacToeBoard::getPiece(int row, int column) {
  * Returns which Piece has won, if there is a winner, Invalid if the game
  * is not over, or Blank if the board is filled and no one has won.
  **/
-Piece TicTacToeBoard::getWinner() { return Invalid; }
+Piece TicTacToeBoard::getWinner() {
+  // Row and Column
+  for (int i = 0; i < BOARDSIZE; i++) {
+    if (board[i][0] != Blank && (board[i][0] == board[i][1] == board[i][2])) {
+      return board[i][0];
+    } else if (board[0][i] != Blank &&
+               (board[0][i] == board[1][i] == board[2][i])) {
+      return board[0][i];
+    }
+  }
+  // Diagonal Win Condition
+  if ((board[0][0] == board[1][1] == board[2][2]) ||
+      (board[0][3] == board[1][1] == board[3][0])) {
+    return board[1][1];
+  }
+  // Board full
+  int boardFull = 1;
+  for (int i = 0; i < BOARDSIZE; i++) {
+    for (int j = 0; j < BOARDSIZE; j++) {
+      if (board[i][j] == Blank) {
+        boardFull = 0;
+      }
+    }
+  }
+  if (boardFull) {
+    return Blank;
+  }
+  return Invalid;
+}
