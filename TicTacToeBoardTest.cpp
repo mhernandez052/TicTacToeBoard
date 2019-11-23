@@ -95,26 +95,84 @@ TEST(TicTacToeBoardTest, placePieceBoardFilled) {
   board.placePiece(0, 1);
   board.placePiece(0, 2);
   // O's turn now, but board is filled
-  // Attempts to place O piece at 2,1 (2,1 is an X piece, and a winning move for O)
+  // Attempts to place O piece at 2,1 (2,1 is an X piece, and a winning move for
+  // O)
   board.placePiece(2, 1);
-  // Attempt Again, and if it wasn't overwritten, then this will return the original X piece.
+  // Attempt Again, and if it wasn't overwritten, then this will return the
+  // original X piece.
   ASSERT_EQ(board.placePiece(2, 1), X);
 }
 
 //////////// Piece Placing Testing //////////////
 
-TEST(TicTacToeBoardTest,getPieceBlank) {
+TEST(TicTacToeBoardTest, getPieceBlank) {
   TicTacToeBoard board;
-  ASSERT_EQ(board.getPiece(0,0), Blank);
+  ASSERT_EQ(board.getPiece(0, 0), Blank);
 }
-TEST(TicTacToeBoardTest,getPieceX) {
+
+TEST(TicTacToeBoardTest, getPieceX) {
   TicTacToeBoard board;
   board.placePiece(0, 0);
-  ASSERT_EQ(board.getPiece(0,0), X);
+  ASSERT_EQ(board.getPiece(0, 0), X);
 }
-TEST(TicTacToeBoardTest,getPieceO) {
+
+TEST(TicTacToeBoardTest, getPieceO) {
   TicTacToeBoard board;
   board.placePiece(0, 0);
   board.placePiece(0, 1);
-  ASSERT_EQ(board.getPiece(0,1), O);
+  ASSERT_EQ(board.getPiece(0, 1), O);
+}
+
+TEST(TicTacToeBoardTest, getPieceInvalid) {
+  TicTacToeBoard board;
+  board.placePiece(0, 0);
+  ASSERT_EQ(board.getPiece(4, 4), Invalid);
+}
+
+//////////// Winner Testing //////////////
+
+TEST(TicTacToeBoardTest, getWinnerRow) {
+  TicTacToeBoard board;
+  board.placePiece(0, 0);
+  board.placePiece(1, 0);
+  board.placePiece(0, 1);
+  board.placePiece(1, 2);
+  board.placePiece(0, 2);
+  ASSERT_EQ(board.getWinner(), X);
+}
+
+TEST(TicTacToeBoardTest, getWinnerColumn) {
+  TicTacToeBoard board;
+  board.placePiece(0, 0);
+  board.placePiece(0, 1);
+  board.placePiece(1, 0);
+  board.placePiece(1, 1);
+  board.placePiece(2, 0);
+  ASSERT_EQ(board.getWinner(), X);
+}
+TEST(TicTacToeBoardTest, getWinnerDiagonal) {
+  TicTacToeBoard board;
+  board.placePiece(0, 0);
+  board.placePiece(1, 0);
+  board.placePiece(1, 1);
+  board.placePiece(2, 0);
+  board.placePiece(2, 2);
+  ASSERT_EQ(board.getWinner(), X);
+}
+TEST(TicTacToeBoardTest, getWinnerNone) {
+  TicTacToeBoard board;
+  ASSERT_EQ(board.getWinner(), Invalid);
+}
+TEST(TicTacToeBoardTest, getWinnerCatsGame) {
+  TicTacToeBoard board;
+  board.placePiece(1, 1);
+  board.placePiece(1, 0);
+  board.placePiece(1, 2);
+  board.placePiece(2, 0);
+  board.placePiece(0, 0);
+  board.placePiece(2, 2);
+  board.placePiece(2, 1);
+  board.placePiece(0, 1);
+  board.placePiece(0, 2);
+  ASSERT_EQ(board.getWinner(), Blank);
 }

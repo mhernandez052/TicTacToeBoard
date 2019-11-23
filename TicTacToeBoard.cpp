@@ -87,7 +87,7 @@ Piece TicTacToeBoard::getWinner() {
   }
   // Diagonal Win Condition
   if ((board[0][0] == board[1][1] && board[1][1] == board[2][2]) ||
-      (board[0][3] == board[1][1] && board[1][1] == board[3][0])) {
+      (board[0][2] == board[1][1] && board[1][1] == board[2][0])) {
     return board[1][1];
   }
   // Board full
