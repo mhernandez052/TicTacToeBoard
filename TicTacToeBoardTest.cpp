@@ -100,3 +100,21 @@ TEST(TicTacToeBoardTest, placePieceBoardFilled) {
   // Attempt Again, and if it wasn't overwritten, then this will return the original X piece.
   ASSERT_EQ(board.placePiece(2, 1), X);
 }
+
+//////////// Piece Placing Testing //////////////
+
+TEST(TicTacToeBoardTest,getPieceBlank) {
+  TicTacToeBoard board;
+  ASSERT_EQ(board.getPiece(0,0), Blank);
+}
+TEST(TicTacToeBoardTest,getPieceX) {
+  TicTacToeBoard board;
+  board.placePiece(0, 0);
+  ASSERT_EQ(board.getPiece(0,0), X);
+}
+TEST(TicTacToeBoardTest,getPieceO) {
+  TicTacToeBoard board;
+  board.placePiece(0, 0);
+  board.placePiece(0, 1);
+  ASSERT_EQ(board.getPiece(0,1), O);
+}
